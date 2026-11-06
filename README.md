@@ -4,7 +4,7 @@
 
 `community@m3u8-pro` · 0 权限 · 0 网络主机 · 风险等级 `standard`
 
-[![test](https://github.com/USER/fluxdown-m3u8-pro/actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml)
+[![test](https://github.com/Ouyangyouzi/fluxdown-m3u8-pro/actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ## 这是什么
