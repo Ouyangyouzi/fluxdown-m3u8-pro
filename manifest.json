@@ -1,0 +1,85 @@
+{
+  "identity": "community@m3u8-pro",
+  "name": "M3U8 超级下载器 Pro",
+  "version": "1.0.0",
+  "description": "把 M3U8 主播放列表交给 FluxDown 引擎：列出全部清晰度、按偏好预选、用网页标题命名、自动补 Referer/UA，并识别独立音轨、AES-128 与直播列表。",
+  "minAppVersion": "0.6.0",
+  "resolvers": [
+    {
+      "match": {
+        "urls": [
+          "*m3u8*"
+        ]
+      },
+      "entry": "resolve.js",
+      "timeoutMs": 20000
+    }
+  ],
+  "settings": [
+    {
+      "key": "maxHeight",
+      "title": "默认清晰度上限",
+      "description": "画质选择框的默认选项。best = 最高码率；其余按不超过该高度的最高一档，没有更低的就取最低档。",
+      "type": "string",
+      "widget": "select",
+      "options": [
+        { "value": "best", "label": "最高（best）" },
+        { "value": "2160", "label": "2160p / 4K" },
+        { "value": "1440", "label": "1440p / 2K" },
+        { "value": "1080", "label": "1080p" },
+        { "value": "720", "label": "720p" },
+        { "value": "480", "label": "480p" },
+        { "value": "360", "label": "360p" }
+      ],
+      "default": "1080"
+    },
+    {
+      "key": "container",
+      "title": "文件名扩展名",
+      "description": "auto = 主列表按 mp4、媒体列表按是否含 EXT-X-MAP 判断（fMP4 → mp4，TS → ts）。实际容器由 FluxDown 引擎决定，若扩展名不符请改这里。",
+      "type": "string",
+      "widget": "select",
+      "options": [
+        { "value": "auto", "label": "自动判断" },
+        { "value": "mp4", "label": "mp4" },
+        { "value": "ts", "label": "ts" },
+        { "value": "mkv", "label": "mkv" }
+      ],
+      "default": "auto"
+    },
+    {
+      "key": "nameSource",
+      "title": "文件名来源",
+      "description": "referrer = 网页地址（任务携带的 Referer）的最后一段；playlist = 播放列表文件名；none = 不干预命名。",
+      "type": "string",
+      "widget": "select",
+      "options": [
+        { "value": "referrer", "label": "网页地址（推荐）" },
+        { "value": "playlist", "label": "播放列表文件名" },
+        { "value": "none", "label": "不干预" }
+      ],
+      "default": "referrer"
+    },
+    {
+      "key": "injectHeaders",
+      "title": "补齐 Referer / User-Agent",
+      "description": "任务没有携带 Referer 或 UA 时，用任务里记录的那份补上，适合防盗链 CDN。已有同名请求头不会被覆盖。",
+      "type": "boolean",
+      "default": "true"
+    },
+    {
+      "key": "injectOrigin",
+      "title": "补发 Origin",
+      "description": "只有 CDN 明确要求 Origin 时才打开；部分签名地址带上 Origin 反而会被拒。",
+      "type": "boolean",
+      "default": "false"
+    },
+    {
+      "key": "attachAudio",
+      "title": "分离音轨一并交给引擎（实验性）",
+      "description": "主列表用 EXT-X-MEDIA 把音频单独成轨时，把音轨地址作为 audioUrl 交给 FluxDown，由它下载并合并（需要 ffmpeg）。部分站点会让音画不同步，默认关闭。",
+      "type": "boolean",
+      "default": "false"
+    }
+  ]
+}

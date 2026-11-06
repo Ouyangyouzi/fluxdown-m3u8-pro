@@ -1,0 +1,42 @@
+{
+  "format": "fluxdown-sniff-pack",
+  "packId": "m3u8-pro-example",
+  "sequence": 1,
+  "engine": 1,
+  "issuedAt": "2026-11-06T00:00:00Z",
+  "rules": [
+    {
+      "id": "plugin.example-hls.stream",
+      "version": 1,
+      "tier": "plugin",
+      "title": "Example：把 m3u8 / mpd 识别为流媒体",
+      "stage": "response",
+      "match": {
+        "pageHost": ["example.com"],
+        "ext": ["m3u8", "mpd"]
+      },
+      "action": { "kind": "resource", "type": "stream", "confidence": "high" }
+    },
+    {
+      "id": "plugin.example-hls.mime",
+      "version": 1,
+      "tier": "plugin",
+      "title": "Example：按 MIME 兜住没有扩展名的播放列表",
+      "stage": "response",
+      "match": {
+        "pageHost": ["example.com"],
+        "mime": ["application/vnd.apple.mpegurl", "application/x-mpegurl", "audio/mpegurl"]
+      },
+      "action": { "kind": "resource", "type": "stream", "confidence": "medium" }
+    },
+    {
+      "id": "plugin.example-hls.title",
+      "version": 1,
+      "tier": "plugin",
+      "title": "Example：用页面标题当文件名",
+      "stage": "page",
+      "match": { "pageHost": ["example.com"] },
+      "action": { "kind": "title", "selector": "h1.video-title, meta[property='og:title']", "attr": "content" }
+    }
+  ]
+}

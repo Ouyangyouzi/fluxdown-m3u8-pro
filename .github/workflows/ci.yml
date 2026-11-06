@@ -1,0 +1,29 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  plugin-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 解析逻辑（主列表 / 媒体列表 / 直播 / 命名 / 放行分支）
+        run: node tests/test-resolver.mjs
+
+      - name: manifest 规则与安装期编译检查
+        run: node tests/test-manifest.mjs
+
+      - name: 语法检查
+        run: node --check resolve.js
+
+      - name: 打包并核对产物
+        run: python3 scripts/pack.py
